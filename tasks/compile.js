@@ -34,9 +34,20 @@ module.exports = function (grunt) {
 
     var gruntConfig = grunt.config.get();
     taskList.forEach(function(task) {
-      if(gruntConfig[task] && gruntConfig[task][target]) {
-        grunt.task.run(task + ':' + target);
+      var subTasks = [];
+      if(gruntConfig[task]) {
+        if(gruntConfig[task][target]) {
+          subTasks.push(target);
+        }
+        else {
+          subTasks = _.filter(_.keys(gruntConfig[task]), function(key) {
+            return _.endsWith(key, '-' + target);
+          });
+        }
       }
+      subTasks.forEach(function(subTask) {
+        grunt.task.run(task + ':' + subTask);
+      })
     });
 
     grunt.task.run('copy:' + copyTask);
