@@ -15,13 +15,13 @@ module.exports = function (grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('compile', 'Runs lint and does compile.', function (target) {
+  grunt.registerMultiTask('compile', 'Runs lint and does compile.', function () {
     var config = {
       copy: {}
     };
 
     var taskList = ['htmllint', 'tslint', 'typescript'];
-    var target = target || 'dev';
+    var target = this.target || 'dev';
     var copyTask = 'copy_compile-' + target;
 
     config.copy[copyTask] = {
